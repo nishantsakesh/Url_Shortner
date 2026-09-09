@@ -19,14 +19,12 @@ public class UrlShortnerService {
     }
 
     public String shortenUrl(String longUrl) {
-        // Step 1: Save the entity to get the auto-incremented database ID
+        // save first to generate DB id
         UrlMapping mapping = new UrlMapping(longUrl);
         mapping = repository.save(mapping);
 
-        // Step 2: Convert the ID to a Base62 string
+        // encode id and update
         String shortKey = Base62Encoder.encode(mapping.getId());
-
-        // Step 3: Update the entity with the generated shortKey
         mapping.setShortKey(shortKey);
         repository.save(mapping);
 
@@ -34,7 +32,6 @@ public class UrlShortnerService {
     }
 
     public String getLongUrl(String shortKey) {
-        // Find the URL by its shortKey
         Optional<UrlMapping> mappingOptional = repository.findByShortKey(shortKey);
         
         if (mappingOptional.isEmpty()) {

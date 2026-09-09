@@ -24,8 +24,7 @@ public class UrlController {
         
         String shortKey = urlService.shortenUrl(request.getLongUrl());
         
-        // In a real app, you would construct the full domain URL here
-        // e.g., "http://localhost:8080/" + shortKey
+        // TODO: construct full domain url instead of just returning short key
         return ResponseEntity.ok(new UrlResponse(shortKey));
     }
 }

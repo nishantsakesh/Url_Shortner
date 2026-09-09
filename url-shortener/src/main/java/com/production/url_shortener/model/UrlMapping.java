@@ -10,8 +10,7 @@ public class UrlMapping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // We removed nullable = false so we can save it first, get the ID, 
-    // encode it, and then update the shortKey.
+    // unique but nullable so we can get ID before encoding
     @Column(unique = true)
     private String shortKey;
 

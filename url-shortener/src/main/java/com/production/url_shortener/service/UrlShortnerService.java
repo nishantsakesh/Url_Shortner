@@ -19,6 +19,10 @@ public class UrlShortnerService {
     }
 
     public String shortenUrl(String longUrl) {
+        if (!isValidUrl(longUrl)) {
+            throw new IllegalArgumentException("Invalid URL format");
+        }
+
         // save first to generate DB id
         UrlMapping mapping = new UrlMapping(longUrl);
         mapping = repository.save(mapping);
@@ -39,5 +43,10 @@ public class UrlShortnerService {
         }
         
         return mappingOptional.get().getLongUrl();
+    }
+
+    private boolean isValidUrl(String url) {
+        // simple validation to ensure it looks like a web url
+        return url != null && url.matches("^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?$");
     }
 }

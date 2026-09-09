@@ -1,6 +1,6 @@
 package com.production.url_shortener.model;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -10,7 +10,9 @@ public class UrlMapping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    // We removed nullable = false so we can save it first, get the ID, 
+    // encode it, and then update the shortKey.
+    @Column(unique = true)
     private String shortKey;
 
     @Column(nullable = false)
@@ -18,14 +20,13 @@ public class UrlMapping {
 
     private LocalDateTime createdAt;
 
-    public  UrlMapping() {}
+    public UrlMapping() {}
 
-    public UrlMapping(String shortKey, String longUrl){
-        this.shortKey = shortKey;
-        this.longUrl=longUrl;
-        this.createdAt=LocalDateTime.now();
-
+    public UrlMapping(String longUrl) {
+        this.longUrl = longUrl;
+        this.createdAt = LocalDateTime.now();
     }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -38,4 +39,3 @@ public class UrlMapping {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
-

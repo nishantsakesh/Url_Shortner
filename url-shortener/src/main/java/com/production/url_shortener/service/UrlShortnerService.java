@@ -35,6 +35,7 @@ public class UrlShortnerService {
         return shortKey;
     }
 
+    @org.springframework.cache.annotation.Cacheable(value = "urls", key = "#shortKey")
     public String getLongUrl(String shortKey) {
         Optional<UrlMapping> mappingOptional = repository.findByShortKey(shortKey);
         
